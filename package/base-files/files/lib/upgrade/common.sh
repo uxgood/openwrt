@@ -134,6 +134,17 @@ export_bootdevice() {
 					fi
 				done
 			;;
+			PARTUUID=????????-????-????-????-??????????02)
+				uuid="${rootpart#PARTUUID=}"
+				uuid="${uuid%02}00"
+				for disk in $(find /dev -type b); do
+					set -- $(dd if=$disk bs=1 skip=568 count=16 2>/dev/null | hexdump -v -e '8/1 "%02x "" "2/1 "%02x""-"6/1 "%02x"')
+					if [ "$4$3$2$1-$6$5-$8$7-$9" = "$uuid" ]; then
+						uevent="/sys/class/block/${disk##*/}/uevent"
+						break
+					fi
+				done
+			;;
 			/dev/*)
 				uevent="/sys/class/block/${rootpart##*/}/../uevent"
 			;;

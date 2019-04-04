@@ -35,10 +35,12 @@ platform_check_image() {
 }
 
 platform_copy_config() {
-	local partdev
+	local partdev magic parttype=ext4
 
 	if export_partdevice partdev 1; then
-		mount -t ext4 -o rw,noatime "/dev/$partdev" /mnt
+		magic=$(dd if="/dev/$partdev" bs=1 count=3 skip=54 2>/dev/null)
+		[ "$magic" = "FAT" ] && parttype=vfat
+		mount -t $parttype -o rw,noatime "/dev/$partdev" /mnt
 		cp -af "$CONF_TAR" /mnt/
 		umount /mnt
 	fi
