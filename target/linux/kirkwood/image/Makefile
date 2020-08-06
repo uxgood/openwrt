@@ -195,4 +195,17 @@ define Device/zyxel_nsa325
 endef
 TARGET_DEVICES += zyxel_nsa325
 
+define Device/pra_nb_m8621t
+  DEVICE_TITLE := Prafly M8621T
+  DEVICE_PACKAGES := kmod-mwl8k swconfig wpad-mini kmod-gpio-button-hotplug
+  DEVICE_DTS := kirkwood-pra-nb-m8621t
+  KERNEL_SIZE := 4096k
+  KERNEL_IN_UBI :=
+  UBINIZE_OPTS := -E 5
+  IMAGE/factory.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-ubi
+  BOARD_NAME := pra-nb-m8621t
+  SUPPORTED_DEVICES += pra-nb-m8621t
+endef
+TARGET_DEVICES += pra_nb_m8621t
+
 $(eval $(call BuildImage))
