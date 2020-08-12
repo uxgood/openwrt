@@ -49,9 +49,6 @@ case "$board" in
 	ucidef_set_led_ataport "hdd1" "HDD1" "nsa325:green:hdd1" "1"
 	ucidef_set_led_ataport "hdd2" "HDD2" "nsa325:green:hdd2" "2"
 	;;
-"pra-nb-m8621t")
-	ucidef_set_led_default "power" "power" "m8621t:green:power" "1"
-	;;
 esac
 
 board_config_flush
