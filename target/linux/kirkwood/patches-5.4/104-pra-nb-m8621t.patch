@@ -14,7 +14,7 @@ Index: linux-4.14.136/arch/arm/boot/dts/kirkwood-pra-nb-m8621t.dts
 ===================================================================
 --- /dev/null
 +++ linux-4.14.136/arch/arm/boot/dts/kirkwood-pra-nb-m8621t.dts
-@@ -0,0 +1,245 @@
+@@ -0,0 +1,228 @@
 +/*
 + * kirkwood-pra-nb-m8621t.dts - Device Tree file for pra-nb-m8621t
 + *
@@ -28,11 +28,11 @@ Index: linux-4.14.136/arch/arm/boot/dts/kirkwood-pra-nb-m8621t.dts
 +/dts-v1/;
 +
 +#include "kirkwood.dtsi"
-+#include "kirkwood-6282.dtsi"
++#include "kirkwood-6281.dtsi"
 +
 +/ {
 +	model = "Prafly M8621T";
-+	compatible = "pra-nb-m8621t", "marvell,kirkwood-88f6282", "marvell,kirkwood";
++	compatible = "pra-nb-m8621t", "marvell,kirkwood-88f6281", "marvell,kirkwood";
 +
 +	memory {
 +		device_type = "memory";
@@ -51,14 +51,8 @@ Index: linux-4.14.136/arch/arm/boot/dts/kirkwood-pra-nb-m8621t.dts
 +		compatible = "gpio-keys";
 +		#address-cells = <1>;
 +		#size-cells = <0>;
-+		pinctrl-0 = < &pmx_btn_wps &pmx_btn_reset >;
++		pinctrl-0 = < &pmx_btn_reset >;
 +		pinctrl-names = "default";
-+
-+		wps {
-+			label = "WPS Button";
-+			linux,code = <KEY_WPS_BUTTON>;
-+			gpios = <&gpio1 15 GPIO_ACTIVE_LOW>;
-+		};
 +
 +		reset {
 +			label = "Reset Button";
@@ -69,12 +63,13 @@ Index: linux-4.14.136/arch/arm/boot/dts/kirkwood-pra-nb-m8621t.dts
 +
 +	gpio-leds {
 +		compatible = "gpio-leds";
-+		pinctrl-0 = < &pmx_led_green_power >;
++		pinctrl-0 = < &pmx_usb_power_enable >;
 +		pinctrl-names = "default";
 +
-+		green-power {
-+			label = "m8621t:green:power";
-+			gpios = <&gpio0 7 GPIO_ACTIVE_HIGH>;
++		usb-power {
++			label = "m8621t:usb:power";
++			gpios = <&gpio1 5 GPIO_ACTIVE_HIGH>;
++			linux,default-trigger = "default-on";
 +		};
 +	};
 +
@@ -127,8 +122,8 @@ Index: linux-4.14.136/arch/arm/boot/dts/kirkwood-pra-nb-m8621t.dts
 +				label = "internet";
 +			};
 +
-+			port@5 {
-+				reg = <5>;
++			port@6 {
++				reg = <6>;
 +				label = "cpu";
 +			};
 +		};
@@ -145,23 +140,15 @@ Index: linux-4.14.136/arch/arm/boot/dts/kirkwood-pra-nb-m8621t.dts
 +		marvell,function = "sata1";
 +	};
 +	pmx_sdio_cd: pmx-sdio-cd {
-+		marvell,pins = "mpp27";
-+		marvell,function = "gpio";
-+	};
-+	pmx_sdio_wp: pmx-sdio-wp {
-+		marvell,pins = "mpp28";
-+		marvell,function = "gpio";
-+	};
-+	pmx_led_green_power: pmx-led-green-power {
-+		marvell,pins = "mpp7";
-+		marvell,function = "gpo";
-+	};
-+	pmx_btn_wps: pmx-btn-wps {
-+		marvell,pins = "mpp47";
++		marvell,pins = "mpp43";
 +		marvell,function = "gpio";
 +	};
 +	pmx_btn_reset: pmx-btn-reset {
 +		marvell,pins = "mpp48";
++		marvell,function = "gpio";
++	};
++	pmx_usb_power_enable: pmx-usb-power-enable {
++		marvell,pins = "mpp37";
 +		marvell,function = "gpio";
 +	};
 +};
@@ -175,10 +162,10 @@ Index: linux-4.14.136/arch/arm/boot/dts/kirkwood-pra-nb-m8621t.dts
 +
 +&sdio {
 +	status = "okay";
-+	pinctrl-0 = <&pmx_sdio &pmx_sdio_cd &pmx_sdio_wp>;
++	pinctrl-0 = <&pmx_sdio &pmx_sdio_cd>;
 +	pinctrl-names = "default";
-+	cd-gpios = <&gpio0 27 GPIO_ACTIVE_LOW>;
-+	wp-gpios = <&gpio0 28 GPIO_ACTIVE_HIGH>;
++	cd-gpios = <&gpio1 11 GPIO_ACTIVE_LOW>;
++	disable-wp;
 +};
 +
 +&nand {
@@ -222,10 +209,6 @@ Index: linux-4.14.136/arch/arm/boot/dts/kirkwood-pra-nb-m8621t.dts
 +	status = "okay";
 +};
 +
-+&pcie1 {
-+	status = "okay";
-+};
-+
 +&mdio {
 +	status = "okay";
 +};
@@ -248,13 +231,13 @@ Index: linux-4.14.136/arch/arm/boot/dts/kirkwood-pra-nb-m8621t.dts
 +/* eth1 is connected to the switch at port 6. However DSA only supports a
 + * single CPU port. Upstream uses DSA so they disable this port to avoid confusion.
 + */
-+/*&eth1 {
-+	status = "okay";
++&eth1 {
++	status = "disabled";
 +	ethernet1-port@0 {
 +		speed = <1000>;
 +		duplex = <1>;
 +	};
-+};*/
++};
 +
 +
 +

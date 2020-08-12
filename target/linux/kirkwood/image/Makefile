@@ -197,7 +197,7 @@ TARGET_DEVICES += zyxel_nsa325
 
 define Device/pra_nb_m8621t
   DEVICE_TITLE := Prafly M8621T
-  DEVICE_PACKAGES := kmod-mwl8k swconfig wpad-mini kmod-gpio-button-hotplug
+  DEVICE_PACKAGES := swconfig wpad-mini kmod-gpio-button-hotplug kmod-ath9k
   DEVICE_DTS := kirkwood-pra-nb-m8621t
   KERNEL_SIZE := 4096k
   KERNEL_IN_UBI :=
