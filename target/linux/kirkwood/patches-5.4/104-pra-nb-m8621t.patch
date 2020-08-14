@@ -1,19 +1,15 @@
-Index: linux-4.14.136/arch/arm/boot/dts/Makefile
-===================================================================
---- linux-4.14.136.orig/arch/arm/boot/dts/Makefile
-+++ linux-4.14.136/arch/arm/boot/dts/Makefile
-@@ -250,6 +250,7 @@ dtb-$(CONFIG_MACH_KIRKWOOD) += \
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -277,6 +277,7 @@ dtb-$(CONFIG_MACH_KIRKWOOD) += \
  	kirkwood-linkstation-lswsxl.dtb \
  	kirkwood-linkstation-lswvl.dtb \
  	kirkwood-linkstation-lswxl.dtb \
 + 	kirkwood-pra-nb-m8621t.dtb \
- 	kirkwood-linksys-audi.dtb \
  	kirkwood-linksys-viper.dtb \
  	kirkwood-lschlv2.dtb \
-Index: linux-4.14.136/arch/arm/boot/dts/kirkwood-pra-nb-m8621t.dts
-===================================================================
+ 	kirkwood-lsxhl.dtb \
 --- /dev/null
-+++ linux-4.14.136/arch/arm/boot/dts/kirkwood-pra-nb-m8621t.dts
++++ b/arch/arm/boot/dts/kirkwood-pra-nb-m8621t.dts
 @@ -0,0 +1,228 @@
 +/*
 + * kirkwood-pra-nb-m8621t.dts - Device Tree file for pra-nb-m8621t
